@@ -1,0 +1,90 @@
+    def download_chrome_url(self, img_dir,province):
+        """
+        影像图片文件下载
+        """""
+        logger.info("影像图片文件下载")
+        driver = self.driver
+
+        span_xpath = "//span[@id='writeoffimageSpan']"
+        cp = ClientOperation()
+
+        Path(img_dir).mkdir(parents=True, exist_ok=True)
+        cp.remove_file(img_dir)
+
+        self.switch_to_main_frame()
+        if self.find_target_from_frames("xpath", span_xpath):
+            span = driver.find_element_by_xpath(span_xpath)
+            num = common.num_re.search(span.text)
+            # 如果括号里有非0的数字，则存在信息
+            # if num and num.group() != '0':
+            if num:
+
+                c_handle = driver.current_window_handle
+                c_handles = driver.window_handles
+                try:
+                    js = driver.find_element_by_xpath(span_xpath).get_attribute("onclick")
+                    driver.execute_script(js)
+                    time.sleep(5)
+                    self.get_new_handle(c_handles)
+                    os.system(
+                        'TASKKILL /F /FI "USERNAME eq {}" /IM WerFault.exe'.format(getpass.getuser()))  # 杀掉基础类未响应窗口
+                    time.sleep(1)
+                    download_xpath = '//button[@id="downLoadAll11"]'
+
+                    if self.is_element_exist("xpath", download_xpath):
+                        # download_button = driver.find_element_by_xpath(download_xpath)
+                        # driver.execute_script("arguments[0].click()", download_button)
+                        # time.sleep(10)
+                        download_url = driver.current_url
+                        sess = requests.Session()
+						# Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0
+                        headers = {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36'
+                        }
+                        sess.headers = headers
+                        html = sess.get(download_url).text
+                        element = etree.HTML(html)
+                        print(download_url)
+
+                        if province in ["广东","江苏"]:
+                            zip_url = re.findall('http://cfyx-cloud.mss.ctc.com:13132', download_url)[0] + re.findall("window.open\('(.*?)'\)",
+                                                                                               element.xpath(
+                                                                                                   '//*[@id="downLoadAll11"]/@onclick')[
+                                                                                                   0])[0]
+                        else:
+                            zip_url =re.findall('http:.*?.com',download_url)[0] + re.findall("window.open\('(.*?)'\)",element.xpath('//*[@id="downLoadAll11"]/@onclick')[0])[0]
+
+                        zip_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'ocr','download_imgs',getpass.getuser())
+                        with open(os.path.join(zip_path,'1.zip'),'wb') as f:
+                            f.write(sess.get(zip_url).content)
+                        time.sleep(2)
+                        while True:
+                            time.sleep(0.5)
+                            if os.listdir(img_dir)[0].endswith(".zip"):
+                                break
+
+                        for file in os.listdir(img_dir):
+                            zip_file = zipfile.ZipFile(img_dir / file)
+                            zip_file.extractall(img_dir)
+                            zip_file.close()
+                            os.remove(img_dir / file)
+                        for i, file in enumerate(os.listdir(img_dir)):
+                            new_name = img_dir / f'F{i + 1}.jpg'
+                            old_name = img_dir / file
+                            os.rename(old_name, new_name)
+                    else:
+                        time.sleep(1)
+                        cp.deal_pic_download(os.path.abspath(img_dir / 'F'))
+
+                        time.sleep(5)
+                except Exception as e:
+                    print(e)
+                    # pid = os.getpid()
+                    # cmd = 'taskkill /pid ' + str(pid) + ' /f'
+                    # os.system(cmd)
+                    self.download_picture_flag = True
+                finally:
+                    self.close_other_window(c_handles)
+                    self.driver.switch_to.window(c_handle)
+        else:
+            logger.warning("未能找到其他信息内的影像信息标签")

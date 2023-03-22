@@ -1,0 +1,10 @@
+2020-11-18 10:48:49 log.py[line:11] INFO 中文信息
+2020-11-18 10:48:49 log.py[line:13] INFO info
+2020-11-18 10:48:49 log.py[line:14] WARNING warn
+2020-11-18 10:48:49 log.py[line:15] ERROR error
+2020-11-18 10:48:49 log.py[line:16] CRITICAL critical
+2020-11-18 10:49:11 log.py[line:11] INFO 中文信息
+2020-11-18 10:49:11 log.py[line:13] INFO info
+2020-11-18 10:49:11 log.py[line:14] WARNING warn
+2020-11-18 10:49:11 log.py[line:15] ERROR error
+2020-11-18 10:49:11 log.py[line:16] CRITICAL critical

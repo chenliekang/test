@@ -1,0 +1,35 @@
+2022-12-15 18:18:01,532|INFO|test.py:22|This is info log
+2022-12-15 18:18:01,533|WARNING|test.py:23|This is warning log
+2022-12-15 18:18:01,533|ERROR|test.py:24|This is error log
+2022-12-15 18:18:01,533|CRITICAL|test.py:25|This is critical log
+2022-12-15 18:21:30,347|INFO|test.py:20|This is info log
+2022-12-15 18:21:30,347|WARNING|test.py:21|This is warning log
+2022-12-15 18:21:30,347|ERROR|test.py:22|This is error log
+2022-12-15 18:21:30,347|CRITICAL|test.py:23|This is critical log
+2022-12-15 18:23:52,602|WARNING|test.py:22|This is warning log
+2022-12-15 18:23:52,604|ERROR|test.py:23|This is error log
+2022-12-15 18:23:52,604|CRITICAL|test.py:24|This is critical log
+2022-12-16 12:43:33,046|INFO|test.py:21|This is info log
+2022-12-16 12:43:33,046|WARNING|test.py:22|This is warning log
+2022-12-16 12:43:33,046|ERROR|test.py:23|This is error log
+2022-12-16 12:43:33,046|CRITICAL|test.py:24|This is critical log
+2022-12-16 12:48:38,309|    INFO|test.py:21|This is info log
+2022-12-16 12:48:38,309| WARNING|test.py:22|This is warning log
+2022-12-16 12:48:38,309|   ERROR|test.py:23|This is error log
+2022-12-16 12:48:38,309|CRITICAL|test.py:24|This is critical log
+2022-12-16 12:51:33,959|INFO    |test.py:21|This is info log
+2022-12-16 12:51:33,959|WARNING |test.py:22|This is warning log
+2022-12-16 12:51:33,959|ERROR   |test.py:23|This is error log
+2022-12-16 12:51:33,959|CRITICAL|test.py:24|This is critical log
+2022-12-19 21:57:51,224|INFO    |test.py:25|This is info log
+2022-12-19 21:57:51,224|WARNING |test.py:26|This is warning log
+2022-12-19 21:57:51,225|ERROR   |test.py:27|This is error log
+2022-12-19 21:57:51,225|CRITICAL|test.py:28|This is critical log
+2022-12-20 19:38:24,236|INFO    |test.py:25|This is info log
+2022-12-20 19:38:24,237|WARNING |test.py:26|This is warning log
+2022-12-20 19:38:24,237|ERROR   |test.py:27|This is error log
+2022-12-20 19:38:24,237|CRITICAL|test.py:28|This is critical log
+2022-12-20 19:41:51,006|INFO    |test.py:26|This is info log
+2022-12-20 19:41:51,007|WARNING |test.py:27|This is warning log
+2022-12-20 19:41:51,007|ERROR   |test.py:28|This is error log
+2022-12-20 19:41:51,007|CRITICAL|test.py:29|This is critical log

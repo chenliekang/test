@@ -1,0 +1,5 @@
+2020-12-01 18:44:36 log.py[line:11] INFO 中文信息
+2020-12-01 18:44:36 log.py[line:13] INFO info
+2020-12-01 18:44:36 log.py[line:14] WARNING warn
+2020-12-01 18:44:36 log.py[line:15] ERROR error
+2020-12-01 18:44:36 log.py[line:16] CRITICAL critical

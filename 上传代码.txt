@@ -1,0 +1,39 @@
+                cookie = '; '.join(
+                    item for item in [item["name"] + "=" + item["value"] for item in driver.get_cookies()])
+                headers = {
+                    'Cookie': cookie,
+                    "User-Agent":'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36'
+                                    }
+                for name in [YHHD, HPPM]:
+                    file_path = os.path.join(down_file_path, name.split('/', 1)[1])
+                    sess = requests.Session()
+                    sess.headers = headers
+                    data = {
+                        'name': name.split('/', 1)[1],
+                        'file_name': name.split('/', 1)[1]
+                    }
+                    print('上传文件 %s' % name)
+                    if '回单' in os.path.basename(file_path):
+                        qianzhui = os.path.basename(file_path).replace('回单','hd')
+                    else:
+                        qianzhui = os.path.basename(file_path).replace('汇票', 'hp')
+                    files = {
+                        'uploadFile':  (qianzhui,open(file_path, 'rb'), 'application/octet-stream')}
+                    url = 'http://cwfz-p6.mss.ctc.com/fssc/writeoff.accessories.handleAccessories.do'
+                    driver.switch_to_default_content()
+                    writeoffInstanceId = self.findXpath(
+                        '//table[@id="uploadifyTable"]/input[@id="writeoffInstanceId"]').get_attribute('value')
+                    params = {
+                        "cmd": 'batchSave',
+                        "id": writeoffInstanceId,
+                        "writeoffInstanceEntityName": 'WriteoffInstance',
+                        "fileType":'',
+                        "type":'',
+                    }
+                    # headers.update({'Referer': 'http://cwfz-p6.mss.ctc.com/fssc/goto.common.BatchFileUpload.do?handleUrl=writeoff.accessories.handleAccessories.do?cmd=batchSave&id=%s&writeoffInstanceEntityName=WriteoffInstance&fileType=&type=&mime_types=pdf,xls,xlsx,doc,docx,txt,ppt,pptx,jpg,jpeg,bmp,gif,html,ofd,png' %writeoffInstanceId})
+                    res = sess.post(url, data=data, params=params, files=files)
+                    if res.status_code == 200 and res.json()['msg'] == "上传成功":
+                        print('上传文件成功 %s' % file_path)
+                    else:
+                        print('上传文件失败 %s' % file_path)
+                        return '上传文件失败 %s' % file_path
